@@ -15,6 +15,10 @@ const students = db.define("student", {
   email: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false
   }
 });
 
