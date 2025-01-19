@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const student = db.define("student", {
+const students = db.define("student", {
   student_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -18,4 +18,4 @@ const student = db.define("student", {
   }
 });
 
-export default student;
+export default students;

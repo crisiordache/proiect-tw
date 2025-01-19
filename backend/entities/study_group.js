@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const study_group = db.define("study_group", {
+const study_groups = db.define("study_group", {
   group_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -14,4 +14,4 @@ const study_group = db.define("study_group", {
   }
 });
 
-export default study_group;
+export default study_groups;

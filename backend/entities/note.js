@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const note = db.define("note", {
+const notes = db.define("note", {
   note_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -34,4 +34,4 @@ const note = db.define("note", {
   }
 });
 
-export default note;
+export default notes;
