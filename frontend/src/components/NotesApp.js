@@ -7,16 +7,21 @@ const NotesApp = () => {
   const [noteText, setNoteText] = useState('');
   const [course, setCourse] = useState('');
   const [title, setTitle] = useState(''); 
+  const [tags, setTags] = useState('');
+
   const [selectedCourse, setSelectedCourse] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+
   const [isEditing, setIsEditing] = useState(false);
   const [currentEditIndex, setCurrentEditIndex] = useState(null); // Indexul notiței în editare
 
   const addNote = () => {
     if (noteText.trim() !== '' && course.trim() !== '' && title.trim() !== '') {
-      setNotes([...notes, { title, text: noteText, course }]);
+      setNotes([...notes, { title, text: noteText, course, tags: tags.split(',').map(tag => tag.trim()) }]);
       setNoteText(''); 
       setCourse(''); 
-      setTitle(''); // Resetarea campurilor de text
+      setTitle(''); 
+      setTags(''); // Resetarea campurilor de text
     }
   };
 
@@ -29,6 +34,7 @@ const NotesApp = () => {
     setNoteText(notes[index].text);
     setCourse(notes[index].course);
     setTitle(notes[index].title);
+    setTags(notes[index].tags.join(', '));
     setIsEditing(true);
     setCurrentEditIndex(index);
   };
@@ -36,24 +42,28 @@ const NotesApp = () => {
   const saveEdit = () => {
     if (noteText.trim() !== '' && course.trim() !== '' && title.trim() !== '' && currentEditIndex !== null) {
       const updatedNotes = notes.map((note, index) =>
-        index === currentEditIndex ? { title, text: noteText, course } : note
+        index === currentEditIndex ? { title, text: noteText, course, tags: tags.split(',').map(tag => tag.trim()) } : note
       );
       setNotes(updatedNotes);
       setNoteText('');
       setCourse('');
       setTitle('');
+      setTags('');
       setIsEditing(false);
       setCurrentEditIndex(null);
     }
   };
 
-  // Lista de cursuri existente in notite introduse
+  // Lista de cursuri si taguri existente in notite introduse
   const uniqueCourses = Array.from(new Set(notes.map(note => note.course)));
+  const uniqueTags = Array.from(new Set(notes.flatMap(note => note.tags)));
 
   // Filtrarea notițelor în funcție de cursul selectat
-  const filteredNotes = selectedCourse
-    ? notes.filter(note => note.course === selectedCourse)
-    : notes;
+  const filteredNotes = notes.filter(note => {
+    const matchesCourse = selectedCourse ? note.course === selectedCourse : true;
+    const matchesTag = selectedTag ? note.tags.includes(selectedTag) : true;
+    return matchesCourse && matchesTag;
+  });
 
   return (
     <div className="container">
@@ -85,6 +95,15 @@ const NotesApp = () => {
           ></textarea>
         </div>
         <div className="row">
+          <input
+            type="text"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            placeholder="Taguri (separate prin virgulă)..."
+            className="input"
+          />
+        </div>
+        <div className="row">
           {isEditing ? (
             <button onClick={saveEdit} className="addButton">Salvează</button>
           ) : (
@@ -106,14 +125,28 @@ const NotesApp = () => {
             <option key={index} value={course}>{course}</option>
           ))}
         </select>
+
+        <label htmlFor="tagFilter">Filtrează după tag:</label>
+        <select
+          id="tagFilter"
+          value={selectedTag}
+          onChange={(e) => setSelectedTag(e.target.value)}
+          className="select"
+        >
+          <option value="">Toate</option>
+          {uniqueTags.map((tag, index) => (
+            <option key={index} value={tag}>{tag}</option>
+          ))}
+        </select>
       </div>
 
       <ul className="notesList">
         {filteredNotes.map((note, index) => (
           <li key={index} className="noteItem">
             <ReactMarkdown>
-              {`**[(${note.course}) ${note.title}]**  \n${note.text}`}
+              {`**[(${note.course}) ${note.title}]**  \n  \n${note.text}`}
             </ReactMarkdown>
+            <p className="tags">Taguri: {note.tags.join(', ')}</p>
             <div>
               <button onClick={() => startEditing(index)} className="editButton">Editează</button>
               <button onClick={() => deleteNote(index)} className="deleteButton">Șterge</button>
