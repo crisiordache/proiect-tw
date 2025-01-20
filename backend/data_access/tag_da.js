@@ -30,16 +30,22 @@ async function delete_tag(id) {
   return false;
 }
 
-async function attach_tag_to_note(note_id, tag_id) {
-  const note = await notes.findByPk(note_id);
-  const tag = await tags.findByPk(tag_id);
-  if (note && tag) {
+async function attach_tag_to_note(note_id, tagData) {
+  try {
+    const note = await notes.findByPk(note_id);
+    if (!note) return null;
+    
+    const [tag] = await tags.findOrCreate({
+      where: { tag_name: tagData.tag_name }
+    });
     await note.addTag(tag);
+    
     return note;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
   }
-  return null;
 }
-
 
 export {
   create_tag,

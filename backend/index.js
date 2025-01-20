@@ -7,6 +7,8 @@ import cors from 'cors';
 import note_router from './routes/note_router.js';
 import tag_router from './routes/tag_router.js'
 import subject_router from './routes/subject_router.js'
+import study_group_router from './routes/study_group_router.js'
+import errorHandler from './middleware/error_handler.js';
 
 env.config()
 
@@ -29,6 +31,9 @@ app.use('/api',student_router);
 app.use('/api',note_router);
 app.use('/api',tag_router);
 app.use('/api',subject_router);
+app.use('/api',study_group_router);
+
+app.use(errorHandler);
 
 let port = process.env.PORT || 9000;
 app.listen(port);

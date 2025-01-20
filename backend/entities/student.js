@@ -14,11 +14,14 @@ const students = db.define("student", {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      is: "^[a-zA-Z0-9._%+-]+@stud\.ase\.ro$"
+    }
   },
   password: {
-    type: Sequelize.STRING,
-    allowNull: false
+      type: Sequelize.STRING,
+      allowNull: false,
   }
 });
 
