@@ -1,3 +1,7 @@
+
+import logo from './logo.svg';
+import './App.css';
+import NotesApp from './components/NotesApp';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar';
@@ -29,7 +33,7 @@ const App = () => {
           {isLoggedIn ? (
             <>
               <Route path="/" element={<Home />} />
-              <Route path="/notes" element={<Notes />} />
+              <Route path="/notes" element={<NotesApp />} />
               <Route path="/groups" element={<StudyGroups studentId={studentId} />} />
               <Route path="/join-group" element={<JoinStudyGroup studentId={studentId} />} />
             </>

@@ -18,11 +18,13 @@ const notes = db.define("note", {
   },
   created_at: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: false,
+    defaultValue: Sequelize.NOW
   },
   last_updated_at: {
     type: Sequelize.DATE,
-    allowNull: false
+    allowNull: false,
+    defaultValue: Sequelize.NOW
   },
   title: {
     type: Sequelize.STRING,
