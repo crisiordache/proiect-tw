@@ -42,6 +42,10 @@ async function delete_note(id) {
   return;
 }
 
+async function get_notes_by_student_id(student_id) {
+  return await notes.findAll({where: {student_id}});
+}
+
 async function get_notes_with_filter_and_pagination(filter) {
   if(!filter.take) {
     filter.take = 3;
@@ -94,5 +98,6 @@ export {
   get_all_notes,
   update_note, 
   delete_note,
-  get_notes_with_filter_and_pagination
+  get_notes_with_filter_and_pagination,
+  get_notes_by_student_id
 }

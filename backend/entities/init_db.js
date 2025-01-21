@@ -39,11 +39,29 @@ function FK_config() {
   notes.hasMany(attachments, {as:alias_attachment, foreignKey:"note_id"});
   attachments.belongsTo(notes, {as:alias_note, foreignKey:"note_id"});
 
-  students.belongsToMany(study_groups, {through:"group_member", as: alias_group, foreignKey:"student_id"});
-  study_groups.belongsToMany(students, {through: "group_member", as: alias_student, foreignKey: "group_id"});
-  
-  tags.belongsToMany(notes, {through: "note_tag", as:alias_note, foreignKey:"tag_id", otherKey:"note_id"});
-  notes.belongsToMany(tags, {through: "note_tag", as:alias_tag, foreignKey:"note_id", otherKey:"tag_id"});
+  students.belongsToMany(study_groups, {
+    through:"group_member", 
+    as: alias_group, 
+    foreignKey:"group_id",
+    otherKey: "student_id"});
+  study_groups.belongsToMany(students, {
+    through: "group_member", 
+    as: alias_student, 
+    foreignKey: "student_id",
+    otherKey: "group_id"});
+
+  notes.belongsToMany(tags, {
+    through: "note_tag",
+    as: alias_tag,
+    foreignKey: "note_id", 
+    otherKey: "tag_id"
+});
+  tags.belongsToMany(notes, {
+    through: "note_tag",
+    as: alias_note,
+    foreignKey: "tag_id",
+    otherKey: "note_id"
+});
 }
 
 function init_DB() {

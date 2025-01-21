@@ -7,6 +7,7 @@ import {
 get_notes_with_filter_and_pagination } from '../data_access/note_da.js';
 import { attach_tag_to_note, get_tags_of_note } from '../data_access/tag_da.js';
 
+
 let note_router = express.Router();
 
 note_router.route('/note').post( async (req, res) => {
@@ -39,6 +40,10 @@ note_router.get('/note/:id/tags',async (req, res) => {
 
 note_router.get('/note_filter', async (req, res) => {
   return res.json(await get_notes_with_filter_and_pagination(req.query));
+});
+
+note_router.get('/note/student/:id', async (req, res) => {
+  return res.json(await get_notes_by_student_id(req.params.id));
 });
 
 export default note_router;
