@@ -11,28 +11,30 @@ import JoinStudyGroup from './Components/JoinStudyGroup';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // Obține `studentId` din sessionStorage
+  const studentId = sessionStorage.getItem('studentId');
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    sessionStorage.removeItem('studentId');
+  };
+
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} handleLogout={handleLogout} />
       <div style={{ paddingTop: '70px' }}>
         <Routes>
-          {/* Rute pentru autentificare */}
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/register" element={<Register />} />
-
-          {/* Rute protejate pentru utilizatori autentificați */}
           {isLoggedIn ? (
             <>
               <Route path="/" element={<Home />} />
               <Route path="/notes" element={<Notes />} />
-              <Route path="/groups" element={<StudyGroups />} />
-              <Route path="/join-group" element={<JoinStudyGroup />} />
+              <Route path="/groups" element={<StudyGroups studentId={studentId} />} />
+              <Route path="/join-group" element={<JoinStudyGroup studentId={studentId} />} />
             </>
           ) : (
-            <>
-              {/* Redirecționează toate rutele neautorizate către login */}
-              <Route path="*" element={<Navigate to="/login" />} />
-            </>
+            <Route path="*" element={<Navigate to="/login" />} />
           )}
         </Routes>
       </div>

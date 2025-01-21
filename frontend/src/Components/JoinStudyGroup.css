@@ -1,43 +1,87 @@
-.new-join-group-container {
-  width: 100%;
-  height: 100vh;
+.join-study-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #280f43, #7d205c);
-  position: fixed; /* Asigură-te că secțiunea este vizibilă peste tot */
-  top: 0;
-  left: 0;
-  z-index: 1000; /* Peste alte elemente */
-  overflow: auto; /* Permite derularea */
-  padding: 20px;
+  gap: 20px; /* Spațiu între carduri */
+  padding: 40px;
 }
 
-.join-group-card {
-  max-width: 500px;
-  width: 100%;
-  padding: 20px;
-  border-radius: 10px;
+.card {
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  position: relative;
-  z-index: 1010; /* Deasupra fundalului */
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  padding: 30px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #ff4d4d;
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1rem;
+  color: white;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+}
+
+button {
+  background: linear-gradient(90deg, #7d205c, #a34e6e);
   color: white;
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #a34e6e, #f6d48b);
+  transform: scale(1.05);
+}
+
+.messages-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  color: #3bd80d;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.cards-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 18px;
-  z-index: 1020;
+  gap: 20px;
+}
+
+.create-group-card,
+.join-group-card {
+  width: 300px;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }

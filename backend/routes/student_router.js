@@ -63,7 +63,7 @@ student_router.post('/login', async (req, res, next) => {
         }
         
         const studentData = {
-            id: student.id,
+            id: student.student_id,
             name: student.name,
             email: student.email
         };

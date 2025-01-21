@@ -1,99 +1,87 @@
 /* Navbar */
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: linear-gradient(90deg, #7d205c, #a34e6e);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-  }
-  
-  /* Logo-ul */
-  .navbar-logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
-    padding-left: 20px;
-    text-transform: uppercase;
-  }
-  
-  /* Link-uri din navbar */
-  .navbar-links {
-    display: flex;
-    gap: 30px;
-    padding-right: 20px; /* Spațiu între butoane */
-  }
-  
-  .navbar-link {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    padding: 10px 20px; /* Dimensiune mai mare pentru butoane */
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1); /* Fundal subtil */
-    transition: background 0.3s ease, transform 0.3s ease;
-  }
-  
-  .navbar-link:hover {
-    background: rgba(255, 255, 255, 0.3); /* Fundal mai pronunțat la hover */
-    transform: scale(1.05); /* Efect de mărire la hover */
-    color: #f6d48b;
-  }
-  
-  /* Buton pentru Logout */
-  .register-btn {
-    background: #f6d48b;
-    color: #7d205c;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 10px 20px;
-    transition: background 0.3s ease, transform 0.3s ease;
-  }
-  
-  .register-btn:hover {
-    background: #7d205c;
-    color: white;
-    transform: scale(1.05);
-  }
-  
-  /* Panoul glisant */
-.slide-out-panel {
-    position: fixed;
-    top: 0;
-    right: -400px; /* Ascuns inițial */
-    width: 400px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
-    transition: right 0.3s ease;
-    z-index: 100;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
-  .slide-out-panel.open {
-    right: 0; /* Devine vizibil */
-  }
-  
-  .close-panel-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .close-panel-btn:hover {
-    color: #f6d48b;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(90deg, #7d205c, #a34e6e);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  padding-left: -50 px;
+  padding-right: 100px;
+}
+
+/* Logo-ul */
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Link-uri din navbar */
+.navbar-links {
+  display: flex;
+  gap: 15px; /* Spațiu între butoane */
+}
+
+/* Butoane generale */
+.navbar-link,
+.navbar-link-notes,
+.navbar-link-add-btn,
+.register-btn {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1); /* Fundal subtil */
+  transition: background 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Efect de hover */
+.navbar-link:hover,
+.navbar-link-notes:hover,
+.navbar-link-add-btn:hover,
+.register-btn:hover {
+  background: rgba(255, 255, 255, 0.3); /* Fundal mai pronunțat la hover */
+  transform: scale(1.05); /* Efect de mărire */
+  color: #f6d48b;
+}
+
+/* Buton Logout */
+.register-btn {
+  background: rgba(255, 255, 255, 0.1); /* Fundal identic */
+  color: white; /* Culoare uniformă */
+  margin-right: 30px;
+}
+
+.register-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #f6d48b;
+}
+
+/* Tematică uniformă pentru toate butoanele */
+.navbar-link-notes,
+.navbar-link-add-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Mărime uniformă */
+.navbar-link,
+.navbar-link-notes,
+.navbar-link-add-btn,
+.register-btn {
+  min-width: 100px;
+  text-align: center;
+}
