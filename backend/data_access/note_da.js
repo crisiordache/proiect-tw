@@ -21,14 +21,24 @@ async function get_all_notes() {
 }
 
 async function update_note(id, updated_note) {
-  return await notes.update(updated_note, { where: { id } });
+  return await notes.update(updated_note, { where: { note_id: id } });
 }
-
+/*
 async function delete_note(id) {
   let elem = notes.findByPk(id, {include:[alias_attachment]});
   if(elem) {
     return await elem.destroy();
   }
+  return;
+}
+*/
+
+async function delete_note(id) {
+  notes.destroy({
+    where: {
+      note_id: id
+    }
+  })
   return;
 }
 

@@ -126,3 +126,8 @@ body {
 .deleteButton:hover {
   background-color: #c82333;
 }
+
+.tags {
+  font-style:italic;
+  font-size:0.75rem;
+}

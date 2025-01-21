@@ -20,7 +20,7 @@ app.use(express.urlencoded({
 }));
 
 const corsOptions = {
-    origin: 'http://localhost:9000',
+    origin: 'http://localhost:3000',
     methods: 'GET,PUT,PATCH,POST,DELETE'
   };
 app.use(cors(corsOptions));

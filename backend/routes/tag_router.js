@@ -22,6 +22,16 @@ tag_router.get('/tag/:id', async (req, res) => {
   return res.json(await get_tag_by_id(req.params.id))
 });
 
+tag_router.get('/tag/search', async (req, res) => {
+  const { name } = req.query;
+  const searchtag = await tag.findOne({ where: { tag_name: name } });
+  if (searchtag) {
+    return res.json(searchtag);
+  } else {
+    return res.status(404).send('Tag not found');
+  }
+});
+
 tag_router.put('/tag/:id', async (req, res) => {
   return res.json(await update_tag(req.params.id, req.body));
 });
