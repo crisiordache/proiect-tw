@@ -8,9 +8,9 @@ const JoinStudyGroup = ({ studentId, onClose }) => {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const joinGroupRef = useRef(null); // Referință pentru componentă
+  const joinGroupRef = useRef(null);
 
-  // Preluarea tuturor grupurilor de studiu
+  // Preluarea grupurilor disponibile
   useEffect(() => {
     const fetchGroups = async () => {
       try {
@@ -18,15 +18,16 @@ const JoinStudyGroup = ({ studentId, onClose }) => {
         setGroups(response.data);
       } catch (error) {
         console.error('Eroare la preluarea grupurilor:', error);
-        setErrorMessage('Eroare la preluarea grupurilor!');
+        setErrorMessage('Nu am putut încărca grupurile de studiu.');
       }
     };
+
     fetchGroups();
 
     // Închidere la click în afara componentei
     const handleClickOutside = (event) => {
       if (joinGroupRef.current && !joinGroupRef.current.contains(event.target)) {
-        onClose(); // Închide secțiunea
+        onClose();
       }
     };
 
@@ -36,45 +37,46 @@ const JoinStudyGroup = ({ studentId, onClose }) => {
     };
   }, [onClose]);
 
-  // Gestionarea înscrierii utilizatorului în grup
+  // Gestionarea înscrierii într-un grup
   const handleJoinGroup = async (e) => {
     e.preventDefault();
-  
+
     if (!groupCode && !selectedGroup) {
       setErrorMessage('Te rugăm să introduci un cod de grup sau să selectezi un grup!');
       return;
     }
-  
+
     const groupId = groupCode || selectedGroup;
-  
+
     try {
-      // API call pentru a adăuga utilizatorul în grup
       const response = await api.post(`/group/${groupId}/student/${studentId}`);
-  
       if (response.status === 200 || response.status === 201) {
-        setSuccessMessage(`Te-ai înscris cu succes în grupul ${groupId}!`);
+        setSuccessMessage(`Te-ai înscris cu succes în grupul "${groupId}"!`);
         setErrorMessage('');
         setGroupCode('');
         setSelectedGroup('');
-      } else {
-        throw new Error('Eroare la înscrierea în grup.');
       }
     } catch (error) {
       console.error('Eroare la înscrierea în grup:', error);
-      setErrorMessage('A apărut o eroare la înscrierea în grup.');
+      setErrorMessage(
+        error.response?.data?.error || 'A apărut o eroare la înscrierea în grup.'
+      );
     }
-  };  
+  };
 
   return (
-    <div className="new-join-group-container">
+    <div className="join-group-container">
       <div className="join-group-card" ref={joinGroupRef}>
         <button className="close-btn" onClick={onClose}>
           X
         </button>
         <h2>Înscriere într-un grup de studiu</h2>
         <p>Alege un grup existent sau înscrie-te cu un cod personalizat!</p>
+
+        {/* Mesaje */}
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+
         <form onSubmit={handleJoinGroup}>
           <div className="form-group">
             <label htmlFor="groupCode">Cod grup:</label>
