@@ -43,11 +43,26 @@ async function add_student_to_group(group_id, student_id) {
   }
 }
 
+async function get_groups_by_student_id(student_id) {
+  return await study_groups.findAll({
+    include: [
+      {
+        model: students,
+        as: alias_student, 
+        where: { student_id }, 
+        through: { attributes: [] } 
+      }
+    ]
+  });
+}
+
+
 export {
   create_group,
   get_group_by_id,
   get_all_groups,
   update_group,
   delete_group,
-  add_student_to_group
+  add_student_to_group,
+  get_groups_by_student_id
 }

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import api from './api'; // Clientul Axios configurat
 import './JoinStudyGroup.css';
@@ -97,3 +98,4 @@ const JoinStudyGroup = ({ studentId }) => {
 };
 
 export default JoinStudyGroup;
+

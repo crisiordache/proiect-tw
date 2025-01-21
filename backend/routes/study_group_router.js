@@ -5,7 +5,8 @@ import {
   get_all_groups,
   get_group_by_id,
   update_group,
-  add_student_to_group
+  add_student_to_group,
+  get_groups_by_student_id
 } from '../data_access/study_group_da.js';
 
 
@@ -33,6 +34,10 @@ study_group_router.route('/group/:id').delete(async (req, res) => {
 
 study_group_router.route('/group/:group_id/student/:student_id').post(async (req, res) => {
   return res.json(await add_student_to_group(req.params.group_id, req.params.student_id));
+});
+
+study_group_router.route('/group/student/:student_id').get(async (req, res) => {
+  return res.json(await get_groups_by_student_id(req.params.student_id));
 });
 
 export default study_group_router;
