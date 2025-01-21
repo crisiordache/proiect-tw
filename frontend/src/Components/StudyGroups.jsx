@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import api from './api'; // Clientul Axios configurat
+import './StudyGroups.css'; // Importă fișierul CSS
 
 const StudyGroups = ({ studentId }) => {
   const [groups, setGroups] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const studentId = sessionStorage.getItem('studentId');
-
     if (!studentId) {
-      console.error('Student ID nu este salvat în sessionStorage. Asigură-te că utilizatorul este autentificat.');
+      setError('Student ID nu este valid. Te rugăm să te autentifici din nou.');
+      return;
     }
 
     const fetchGroups = async () => {
@@ -20,7 +20,7 @@ const StudyGroups = ({ studentId }) => {
         console.error('Eroare la obținerea grupurilor:', err);
         setError('Nu am putut încărca grupurile. Te rugăm să încerci din nou.');
       }
-    };    
+    };
 
     fetchGroups();
   }, [studentId]);
@@ -30,11 +30,14 @@ const StudyGroups = ({ studentId }) => {
       <h1>Grupuri de Studiu</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {!error && groups.length > 0 ? (
-        <ul>
+        <div className="groups-container">
           {groups.map((group) => (
-            <li key={group.group_id}>{group.group_name}</li>
+            <div key={group.group_id} className="group-card">
+              <h2>{group.group_name}</h2>
+              <p>CHEIE ACCES: {group.group_id}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         !error && <p>Nu ești înscris în niciun grup de studiu.</p>
       )}
