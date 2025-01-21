@@ -1,7 +1,5 @@
 
-import logo from './logo.svg';
 import './App.css';
-import NotesApp from './Components/NotesApp';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar';
@@ -10,6 +8,7 @@ import Register from './Components/Register';
 import StudyGroups from './Components/StudyGroups';
 import Home from './Components/Home';
 import JoinStudyGroup from './Components/JoinStudyGroup';
+import NotesApp from './Components/NotesApp';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
