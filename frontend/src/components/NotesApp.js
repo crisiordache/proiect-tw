@@ -213,101 +213,110 @@ const NotesApp = () => {
   };
 
   return (
-    <div className="container">
+    <div className="mainContainer">
       <h1 className="title">Notițele Mele</h1>
-
-      <div className="inputContainer">
-        <div className="row_header">
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Titlul notiței..."
-            className="input"
-          />
-          <select
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            className="input"
-          >
-            <option value="">Selectează un curs...</option>
-            {subjects.map((subject) => (
-              <option key={subject.subject_id} value={subject.subject_id}>
-                {subject.subject_name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="row">
-          <textarea
-            value={noteText}
-            onChange={(e) => setNoteText(e.target.value)}
-            placeholder="Scrie o notiță... (Markdown suportat)"
-            className="textarea largeTextarea"
-          ></textarea>
-        </div>
-        <div className="row">
-          <input
-            type="text"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            placeholder="Taguri (separate prin virgulă)..."
-            className="input"
-          />
-        </div>
-        <div className="row">
-          {isEditing ? (
-            <button onClick={saveEdit} className="addButton">Salvează</button>
-          ) : (
-            <button onClick={addNote} className="addButton">Adaugă</button>
-          )}
-        </div>
-      </div>
-
-      <div className="filterContainer">
-        <label htmlFor="courseFilter">Filtrează după curs:</label>
-        <select
-          id="courseFilter"
-          value={selectedSubject}
-          onChange={(e) => setSelectedSubject(e.target.value)}
-          className="select"
-        >
-          <option value="">Toate</option>
-          {subjects.map((subject) => (
-            <option key={subject.subject_id} value={subject.subject_id}>
-              {subject.subject_name}
-            </option>
-          ))}
-        </select>
-
-        <label htmlFor="tagFilter">Filtrează după tag:</label>
-        <select
-          id="tagFilter"
-          value={selectedTag}
-          onChange={(e) => setSelectedTag(e.target.value)}
-          className="select"
-        >
-          <option value="">Toate</option>
-          {uniqueTags.map((tag, index) => (
-            <option key={index} value={tag}>{tag}</option>
-          ))}
-        </select>
-      </div>
-
-      <ul className="notesList">
-        {filteredNotes.map((note) => (
-          <li key={note.note_id} className="noteItem">
-            <ReactMarkdown>
-              {`**${note.title}** (${getSubjectName(note.subject_id)})  \n  \n${note.content}`}
-            </ReactMarkdown>
-            <p className="tags">Taguri: {note.tags.join(', ')}</p>
-            <div>
-              <button onClick={() => startEditing(note.note_id)} className="editButton">Editează</button>
-              <button onClick={() => deleteNote(note.note_id)} className="deleteButton">Șterge</button>
+      <div className="container">
+        {/* Partea pentru adăugare și editare notițe */}
+        <div className="noteForm">
+          <h2>Adaugă/Editează Notiță</h2>
+          <div className="inputContainer">
+            <div className="row_header">
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Titlul notiței..."
+                className="input"
+              />
+              <select
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="input"
+              >
+                <option value="">Selectează un curs...</option>
+                {subjects.map((subject) => (
+                  <option key={subject.subject_id} value={subject.subject_id}>
+                    {subject.subject_name}
+                  </option>
+                ))}
+              </select>
             </div>
-          </li>
-        ))}
-      </ul>
+            <div className="row">
+              <textarea
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                placeholder="Scrie o notiță... (Markdown suportat)"
+                className="textarea"
+              ></textarea>
+            </div>
+            <div className="row">
+              <input
+                type="text"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="Taguri (separate prin virgulă)..."
+                className="input"
+              />
+            </div>
+            <div className="row">
+              {isEditing ? (
+                <button onClick={saveEdit} className="addButton">Salvează</button>
+              ) : (
+                <button onClick={addNote} className="addButton">Adaugă</button>
+              )}
+            </div>
+          </div>
+        </div>
+  
+        {/* Partea pentru listarea notițelor */}
+        <div className="noteList">
+          <h2>Notițele Mele</h2>
+          <div className="filterContainer">
+            <label htmlFor="courseFilter">Filtrează după curs:</label>
+            <select
+              id="courseFilter"
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              className="select"
+            >
+              <option value="">Toate</option>
+              {subjects.map((subject) => (
+                <option key={subject.subject_id} value={subject.subject_id}>
+                  {subject.subject_name}
+                </option>
+              ))}
+            </select>
+  
+            <label htmlFor="tagFilter">Filtrează după tag:</label>
+            <select
+              id="tagFilter"
+              value={selectedTag}
+              onChange={(e) => setSelectedTag(e.target.value)}
+              className="select"
+            >
+              <option value="">Toate</option>
+              {uniqueTags.map((tag, index) => (
+                <option key={index} value={tag}>{tag}</option>
+              ))}
+            </select>
+          </div>
+  
+          <ul className="notesList">
+            {filteredNotes.map((note) => (
+              <li key={note.note_id} className="noteItem">
+                <ReactMarkdown>
+                  {`**${note.title}** (${getSubjectName(note.subject_id)})  \n  \n${note.content}`}
+                </ReactMarkdown>
+                <p className="tags">Taguri: {note.tags.join(', ')}</p>
+                <div>
+                  <button onClick={() => startEditing(note.note_id)} className="editButton">Editează</button>
+                  <button onClick={() => deleteNote(note.note_id)} className="deleteButton">Șterge</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
