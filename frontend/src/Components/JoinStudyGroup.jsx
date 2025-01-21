@@ -1,42 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import api from './api';
 import './JoinStudyGroup.css';
 
-const JoinStudyGroup = () => {
+const JoinStudyGroup = ({ studentId, onClose }) => {
+  const [groups, setGroups] = useState([]);
   const [groupCode, setGroupCode] = useState('');
-  const [groupName, setGroupName] = useState('');
+  const [selectedGroup, setSelectedGroup] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [groups] = useState([
-    { id: 1, name: 'Algebra Liniara' },
-    { id: 2, name: 'Tehnologii Web' },
-    { id: 3, name: 'POO' },
-  ]);
+  const joinGroupRef = useRef(null); // Referință pentru componentă
 
-  const handleJoinGroup = (e) => {
+  // Preluarea tuturor grupurilor de studiu
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await api.get('/group');
+        setGroups(response.data);
+      } catch (error) {
+        console.error('Eroare la preluarea grupurilor:', error);
+        setErrorMessage('Eroare la preluarea grupurilor!');
+      }
+    };
+    fetchGroups();
+
+    // Închidere la click în afara componentei
+    const handleClickOutside = (event) => {
+      if (joinGroupRef.current && !joinGroupRef.current.contains(event.target)) {
+        onClose(); // Închide secțiunea
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
+  // Gestionarea înscrierii utilizatorului în grup
+  const handleJoinGroup = async (e) => {
     e.preventDefault();
-    if (groupCode) {
-      setSuccessMessage(`Te-ai înscris cu succes în grupul ${groupCode}!`);
-      setErrorMessage('');
-      setGroupCode('');
-      setGroupName('');
-    } else
-    
-    if(groupName) {
-
-        setSuccessMessage(`Te-ai înscris cu succes în grupul ${groupName}!`);
+  
+    if (!groupCode && !selectedGroup) {
+      setErrorMessage('Te rugăm să introduci un cod de grup sau să selectezi un grup!');
+      return;
+    }
+  
+    const groupId = groupCode || selectedGroup;
+  
+    try {
+      // API call pentru a adăuga utilizatorul în grup
+      const response = await api.post(`/group/${groupId}/student/${studentId}`);
+  
+      if (response.status === 200 || response.status === 201) {
+        setSuccessMessage(`Te-ai înscris cu succes în grupul ${groupId}!`);
         setErrorMessage('');
         setGroupCode('');
-        setGroupName('');
+        setSelectedGroup('');
+      } else {
+        throw new Error('Eroare la înscrierea în grup.');
+      }
+    } catch (error) {
+      console.error('Eroare la înscrierea în grup:', error);
+      setErrorMessage('A apărut o eroare la înscrierea în grup.');
     }
-    else {
-      setErrorMessage('Te rugăm să introduci un cod de grup sau să selectezi un grup!');
-      setSuccessMessage('');
-    }
-  };
+  };  
 
   return (
     <div className="new-join-group-container">
-      <div className="join-group-card">
+      <div className="join-group-card" ref={joinGroupRef}>
+        <button className="close-btn" onClick={onClose}>
+          X
+        </button>
         <h2>Înscriere într-un grup de studiu</h2>
         <p>Alege un grup existent sau înscrie-te cu un cod personalizat!</p>
         {successMessage && <p className="success-message">{successMessage}</p>}
@@ -56,12 +90,12 @@ const JoinStudyGroup = () => {
             <label htmlFor="groupSelect">Selectează un grup:</label>
             <select
               id="groupSelect"
-              value={groupName}
-              onChange={(e) => setGroupName(e.target.value)}
+              value={selectedGroup}
+              onChange={(e) => setSelectedGroup(e.target.value)}
             >
               <option value="">-- Selectează un grup --</option>
               {groups.map((group) => (
-                <option key={group.id} value={group.name}>
+                <option key={group.id} value={group.id}>
                   {group.name}
                 </option>
               ))}

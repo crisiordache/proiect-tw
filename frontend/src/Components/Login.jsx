@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from './api';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate(); // Hook pentru navigare
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Verificăm dacă email-ul are formatul corect
-    if (email.endsWith('@stud.ase.ro')) {
-      alert('Autentificare reușită!');
-      setError(''); // Resetăm mesajele de eroare
-    } else {
-      setError('Email-ul trebuie să fie cel constituțional!'); // Mesaj de eroare
+    try {
+      const response = await api.post('/login', { email, password });
+
+      if (response.status === 200) {
+        alert('Autentificare reușită!');
+        setError('');
+        setIsLoggedIn(true);
+        navigate('/'); // Redirecționează la pagina "Home"
+      }
+    } catch (err) {
+      console.error('Eroare la autentificare:', err);
+      setError(err.response?.data?.error || 'Autentificare eșuată!');
     }
   };
 

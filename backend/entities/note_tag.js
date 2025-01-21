@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const note_tag = db.define("note_tag", {
+const note_tags = db.define("note_tag", {
   note_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -16,4 +16,4 @@ const note_tag = db.define("note_tag", {
     }
 });
 
-export default note_tag;
+export default note_tags;

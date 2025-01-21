@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const student = db.define("student", {
+const students = db.define("student", {
   student_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -14,8 +14,15 @@ const student = db.define("student", {
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      is: "^[a-zA-Z0-9._%+-]+@stud\.ase\.ro$"
+    }
+  },
+  password: {
+      type: Sequelize.STRING,
+      allowNull: false,
   }
 });
 
-export default student;
+export default students;

@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const attachment = db.define("attachment",{
+const attachments = db.define("attachment",{
   attachment_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -18,4 +18,4 @@ const attachment = db.define("attachment",{
   }
 });
 
-export default attachment;
+export default attachments;

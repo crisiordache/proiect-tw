@@ -1,7 +1,7 @@
 import db from '../db_config.js';
 import Sequelize from 'sequelize';
 
-const subject = db.define("subject", {
+const subjects = db.define("subject", {
   subject_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -14,4 +14,4 @@ const subject = db.define("subject", {
   }
 });
 
-export default subject;
+export default subjects;

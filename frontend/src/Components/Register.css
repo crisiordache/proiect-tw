@@ -1,0 +1,107 @@
+/* Fundal general */
+body {
+  background: linear-gradient(135deg, #280f43, #613669, #7d205c, #a34e6e);
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  color: white;
+}
+
+/* Container principal pentru formular */
+.register-container {
+  width: 400px;
+  padding: 30px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1); /* Fundal translucid */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Umbra */
+  backdrop-filter: blur(15px); /* Efect de "frosted glass" */
+  text-align: center;
+  color: white;
+}
+
+/* Titlul formularului */
+.register-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Grupurile de input */
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Etichete */
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+/* Input-uri */
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group input:focus {
+  border: 1px solid #a34e6e;
+  box-shadow: 0 0 5px rgba(163, 78, 110, 0.5);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Buton */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #7d205c, #a34e6e);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #a34e6e, #f6d48b);
+  box-shadow: 0 4px 15px rgba(246, 212, 139, 0.5);
+}
+
+/* Mesaje de eroare */
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Mesaje de succes */
+.success-message {
+  color: #28a745;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}

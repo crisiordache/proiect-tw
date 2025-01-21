@@ -1,14 +1,12 @@
-import mysql from 'mysql2/promise.js'
+import mysql from 'mysql2/promise.js';
 import env from 'dotenv';
-import attachment from './attachment.js'
-import group_member from './group_member.js'
-import note_tag from './note_tag.js'
-import note from './note.js'
-import student from './student.js'
-import study_group from './study_group.js'
-import subject from './subject.js'
-import tag from './tag.js'
-import {alias_attachment, alias_group, alias_note, alias_student, alias_tag} from './const_db.js';
+import attachments from './attachment.js';
+import notes from './note.js';
+import students from './student.js';
+import study_groups from './study_group.js';
+import subjects from './subject.js';
+import tags from './tag.js';
+import {alias_attachment, alias_group, alias_note, alias_student, alias_tag, alias_subject} from './const_db.js';
 
 
 env.config();
@@ -32,20 +30,20 @@ function create_DB(){
     })
 }
 function FK_config() {
-  student.hasMany(note, {as:alias_note, foreignKey:"student_id"});
-  note.belongsTo(student, {foreignKey:"student_id"});
+  students.hasMany(notes, {as:alias_note, foreignKey:"student_id"});
+  notes.belongsTo(students, {as:alias_student, foreignKey:"student_id"});
 
-  subject.hasMany(note, {as:alias_note, foreignKey:"subject_id"});
-  note.belongsTo(subject, {foreignKey:"subject_id"});
+  subjects.hasMany(notes, {as:alias_note, foreignKey:"subject_id"});
+  notes.belongsTo(subjects, {as:alias_subject, foreignKey:"subject_id"});
 
-  note.hasMany(attachment, {as:alias_attachment, foreignKey:"note_id"});
-  attachment.belongsTo(note, {foreignKey:"note_id"});
+  notes.hasMany(attachments, {as:alias_attachment, foreignKey:"note_id"});
+  attachments.belongsTo(notes, {as:alias_note, foreignKey:"note_id"});
 
-  student.belongsToMany(study_group, {through:"group_member", as: alias_group, foreignKey:"group_id"});
-  study_group.belongsToMany(student, {through: "group_member", as: alias_student, foreignKey: "student_id"});
+  students.belongsToMany(study_groups, {through:"group_member", as: alias_group, foreignKey:"group_id"});
+  study_groups.belongsToMany(students, {through: "group_member", as: alias_student, foreignKey: "student_id"});
 
-  note.belongsToMany(tag, {through: "note_tag", as:alias_tag, foreignKey:"tag_id"});
-  tag.belongsToMany(note, {through: "note_tag", as:alias_note, foreignKey:"note_id"});
+  notes.belongsToMany(tags, {through: "note_tag", as:alias_tag, foreignKey:"tag_id"});
+  tags.belongsToMany(notes, {through: "note_tag", as:alias_note, foreignKey:"note_id"});
 }
 
 function init_DB() {
