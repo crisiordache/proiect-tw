@@ -1,13 +1,12 @@
 
 import logo from './logo.svg';
 import './App.css';
-import NotesApp from './components/NotesApp';
+import NotesApp from './Components/NotesApp';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Login from './Components/Login';
 import Register from './Components/Register';
-import Notes from './Components/NotesApp';
 import StudyGroups from './Components/StudyGroups';
 import Home from './Components/Home';
 import JoinStudyGroup from './Components/JoinStudyGroup';
