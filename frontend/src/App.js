@@ -13,7 +13,7 @@ import NotesApp from './Components/NotesApp';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Obține `studentId` din sessionStorage
+  // preluam ID-ul studentului din sessionStorage
   const studentId = sessionStorage.getItem('studentId');
 
   const handleLogout = () => {
@@ -31,7 +31,7 @@ const App = () => {
           {isLoggedIn ? (
             <>
               <Route path="/" element={<Home />} />
-              <Route path="/notes" element={<NotesApp />} />
+              <Route path="/notes" element={<NotesApp studentId={studentId}/>} />
               <Route path="/groups" element={<StudyGroups studentId={studentId} />} />
               <Route path="/join-group" element={<JoinStudyGroup studentId={studentId} />} />
             </>

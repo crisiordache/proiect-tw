@@ -16,6 +16,22 @@ async function get_tag_by_id(id) {
   return await tags.findByPk(id);
 }
 
+async function get_tag_by_name(query) {
+    const { name } = query;
+    
+    if (!name) {
+      console.log('Nume lipsă');
+      return res.status(400).send('Numele tag-ului este obligatoriu');
+    }
+
+    const searchtag = await tags.findOne({ where: { tag_name: name } });
+    if (searchtag) {
+      return searchtag
+    } else {
+      return res.status(404).send('Tag not found');
+    }
+}
+
 async function update_tag(id, tag_data) {
   const tag = await get_tag_by_id(id);
   if (tag) {
@@ -86,5 +102,6 @@ export {
   update_tag,
   delete_tag,
   attach_tag_to_note,
-  get_tags_of_note
+  get_tags_of_note,
+  get_tag_by_name
 }

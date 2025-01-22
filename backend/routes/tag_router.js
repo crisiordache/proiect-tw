@@ -5,7 +5,8 @@ import {
   get_tag_by_id, 
   update_tag, 
   delete_tag, 
-  attach_tag_to_note
+  attach_tag_to_note,
+  get_tag_by_name
 } from '../data_access/tag_da.js';
 
 const tag_router = express.Router();
@@ -23,13 +24,7 @@ tag_router.get('/tag/:id', async (req, res) => {
 });
 
 tag_router.get('/tag/search', async (req, res) => {
-  const { name } = req.query;
-  const searchtag = await tag.findOne({ where: { tag_name: name } });
-  if (searchtag) {
-    return res.json(searchtag);
-  } else {
-    return res.status(404).send('Tag not found');
-  }
+  return res.json(await get_tag_by_name(req.query));
 });
 
 tag_router.put('/tag/:id', async (req, res) => {

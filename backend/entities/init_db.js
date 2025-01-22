@@ -53,14 +53,12 @@ function FK_config() {
   notes.belongsToMany(tags, {
     through: "note_tag",
     as: alias_tag,
-    foreignKey: "note_id", 
-    otherKey: "tag_id"
+    foreignKey: "note_id"
 });
   tags.belongsToMany(notes, {
     through: "note_tag",
     as: alias_note,
-    foreignKey: "tag_id",
-    otherKey: "note_id"
+    foreignKey: "tag_id"
 });
 }
 

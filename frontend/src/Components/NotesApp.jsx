@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import api from './api.js';
 import './NotesApp.css';
 
-const NotesApp = () => {
+const NotesApp = ({studentId}) => {
   const [notes, setNotes] = useState([]);
   const [subjects, setSubjects] = useState([]); 
   const [noteText, setNoteText] = useState(''); 
@@ -19,7 +19,7 @@ const NotesApp = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const response = await api.get(`/note`);
+        const response = await api.get(`/note/student/${studentId}`);
         if (response.status !== 200) {
           console.error('Eroare la obținerea notițelor:', response.statusText);
           return;
@@ -63,23 +63,21 @@ const NotesApp = () => {
     for (const tagName of tagList) {
       try {
         // check daca exista deja tagul
-        const tagResponse = await api.get(`tag/search?name=${tagName}`);
+        const tagResponse = await api.get(`tag`); // tag/search?name=NUME e broken
         let tagData;
 
         if (tagResponse.status === 200 || tagResponse.status === 201) {
           tagData = tagResponse.data;
         }
-        if(!tagData) {
-          // daca nu, creaza unul nou
+        let foundTag = tagData.find(item => item.tag_name === tagName)
+        if(!foundTag) {
           const createTagResponse = await api.post(`tag/`, {
             tag_name: tagName
           });
-          tagData = createTagResponse.data;
-          }
-
-        if (tagData) {
-          await api.post(`note/${noteId}/tag`, tagData);
+          foundTag = createTagResponse.data;
         }
+        await api.post(`note/${noteId}/tag`, foundTag);
+
       } catch (error) {
         console.error(`Eroare la procesarea tag-ului "${tagName}":`, error);
       }
@@ -97,7 +95,7 @@ const NotesApp = () => {
         title,
         content: noteText,
         subject_id: parseInt(subject, 10),
-        student_id: 1
+        student_id: studentId
       });
 
       if (response.status === 200 || response.status === 201) {
@@ -113,22 +111,22 @@ const NotesApp = () => {
           await Promise.all(
             tagList.map(async (tagName) => {
               try {
-                const tagResponse = await api.get(`tag/search?name=${tagName}`);
+                const tagResponse = await api.get(`tag`); // tag/search?name=NUME e broken
+                console.log(tagResponse);
                 let tagData;
 
                 if (tagResponse.status === 200 || tagResponse.status === 201) {
                   tagData = tagResponse.data;
                 }
-                if(!tagData) {
+                let foundTag = tagData.find(item => item.tag_name === tagName)
+                if(!foundTag) {
                   const createTagResponse = await api.post(`tag/`, {
                     tag_name: tagName
                   });
-                  tagData = createTagResponse.data;
+                  foundTag = createTagResponse.data;
                 }
+                await api.post(`note/${createdNote.note_id}/tag`, foundTag);
 
-                if (tagData) {
-                  await api.post(`note/${createdNote.note_id}/tag`, tagData);
-                }
               } catch (error) {
                 console.error(`Eroare la procesarea tag-ului ${tagName}:`, error);
               }
@@ -170,7 +168,7 @@ const NotesApp = () => {
     const tagList = tags
       .split(',')
       .map(tag => tag.trim())
-      .filter(tag => tag !== ''); // Elimină tagurile goale
+      .filter(tag => tag !== ''); 
 
     const response = await api.put(`note/${currentEditId}/`, {
       title,
@@ -184,16 +182,16 @@ const NotesApp = () => {
         await handleTags(currentEditId, tagList);
       }
       const updatedNotes = notes.map(note =>
-        note.note_id === currentEditId ? { ...note, ...updatedNote } :{ ...note }
+        note.note_id === currentEditId ? { ...note, ...updatedNote, tags: tagList } :{ ...note }
       ); 
-      setNotes([...updatedNotes]);
+      setNotes(updatedNotes);
       setNoteText('');
       setSubject('');
       setTitle('');
       setTags('');
       setIsEditing(false);
       setCurrentEditId(null);
-      alert('Notița a fost actualizată cu succes! Te rog să reîmprospătezi pagina pentru a vedea schimbările.')
+      alert('Notița a fost actualizată cu succes! Te rog să re-accesezi pagina pentru a vedea schimbările.') //React nu vrea sa actualizeze notita in lista indiferent ce am incercat, asa ca trebuie reincarcata pagina de notite pentru a vedeaschimbari la titlu/continut
     }
   }
 };
