@@ -4,7 +4,8 @@ import {
   get_all_notes, 
   get_note_by_id, 
   update_note,
-get_notes_with_filter_and_pagination } from '../data_access/note_da.js';
+  get_notes_with_filter_and_pagination,
+  get_notes_by_student_id } from '../data_access/note_da.js';
 import { attach_tag_to_note, get_tags_of_note } from '../data_access/tag_da.js';
 
 

@@ -31,7 +31,7 @@ const notes = db.define("note", {
     allowNull: false
   },
   content: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false
   }
 });
