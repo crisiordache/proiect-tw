@@ -1,118 +1,181 @@
 body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #280f43, #613669, #7d205c, #a34e6e);
   background-size: 100% 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
   color: white;
+  
+}
+
+.mainContainer {
+  width: 100%;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
-  max-width: 800px;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  max-width: 90%;
   margin: 0 auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1); /* Fundal translucid */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Umbra */
-  backdrop-filter: blur(15px); /* Efect de "frosted glass" */
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
   border-radius: 15px;
-  color: white;
+  align-items: stretch; 
 }
+
+
+.noteForm, .noteList {
+  display: flex;
+  flex-direction: column; 
+  flex: 1; 
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.noteForm {
+  flex: 7; 
+}
+
+.noteList {
+  flex: 4;
+  overflow-y: auto; 
+  max-height: calc(100vh - 10px);
+}
+
 
 .title {
   text-align: center;
-  color: white;
-}
-
-.inputContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
-.row_header {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.row {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.input {
-  width: 100%;
-  padding: 10px;
+.input, button {
+  width: 80%;
+  max-width: 600px;
+  padding: 12px 16px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 8px;
   outline: none;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
-}
-
-.input::placeholder,
-.textarea::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.input:focus {
-  border: 1px solid #a34e6e;
-  box-shadow: 0 0 5px rgba(163, 78, 110, 0.5);
-  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 20px;
 }
 
 .textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px 16px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-size: 16px;
+  font-size: 1rem;
   border-radius: 8px;
   resize: vertical;
-  min-height: 120px;
+  min-height: 300px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: 'Arial', sans-serif;
 }
 
-.addButton {
-  padding: 10px 15px;
+.textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+.textarea:focus {
+  border: 1px solid #f6d48b;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(246, 212, 139, 0.5);
+}
+
+
+.input::placeholder, .textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+
+.input:focus, .textarea:focus, .select:focus {
+  border: 1px solid #f6d48b;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(246, 212, 139, 0.5);
+}
+
+
+button {
   background: linear-gradient(90deg, #7d205c, #a34e6e);
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  padding: 12px 16px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 50%;
+  max-width: 300px;
 }
 
-.addButton:hover {
+
+button:hover {
   background: linear-gradient(90deg, #a34e6e, #f6d48b);
   box-shadow: 0 4px 15px rgba(246, 212, 139, 0.5);
 }
 
-.filterContainer {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+
+.select, .input {
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(60, 15, 90, 0.9); 
+  color: #f6d48b; 
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 8px;
+
+.select:focus {
+  border: 1px solid #f6d48b;
+  background: rgba(80, 20, 120, 0.9);
+  box-shadow: 0 0 8px rgba(246, 212, 139, 0.5);
+  color: #ffffff; 
 }
+
+
+.select,.input option {
+  background: rgba(60, 15, 90, 0.9); 
+  color: #f6d48b;
+  padding: 10px;
+}
+
+.select,.input option:hover {
+  background: rgba(80, 20, 120, 1);
+  color: #ffffff; 
+}
+
+.select,.input option:checked {
+  background: rgba(100, 30, 150, 1);
+  color: #f6d48b;
+}
+
 
 .notesList {
   list-style-type: none;
@@ -120,21 +183,28 @@ body {
 }
 
 .noteItem {
-  padding: 10px;
+  padding: 15px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
-  margin-bottom: 10px;
   background: rgba(255, 255, 255, 0.2);
   color: white;
+  margin-bottom: 15px;
 }
 
+.noteItem:last-child {
+  margin-bottom: 0;
+}
+
+
 .editButton, .deleteButton {
-  padding: 5px 10px;
-  font-size: 14px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-right: 5px;
+  font-family: 'Arial', sans-serif;
+  transition: all 0.3s ease;
+  margin-right: 10px;
 }
 
 .editButton {
@@ -155,109 +225,88 @@ body {
   background: linear-gradient(90deg, #c82333, #ff6347);
 }
 
-.tags {
-  font-style: italic;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.7);
+/* Bara de scroll personalizată */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-.input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  font-size: 16px;
-  border-radius: 8px;
-  outline: none;
-  appearance: none; /* Ascunde stilurile native ale browserului */
-  cursor: pointer;
+::-webkit-scrollbar-track {
+  background: rgba(100, 100, 100, 0.2);
 }
 
-.input:focus {
-  border: 1px solid #a34e6e;
-  box-shadow: 0 0 5px rgba(163, 78, 110, 0.5);
-  background: rgba(255, 255, 255, 0.3);
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #4b275f, #321a4a);
+  border-radius: 10px;
 }
 
-.input option {
-  background: rgba(40, 15, 67, 0.9); /* Fundal întunecat pentru opțiuni */
-  color: white;
-  padding: 10px;
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #5e3c70, #472360);
 }
 
-.input option:hover {
-  background: rgba(100, 50, 100, 0.8); /* Fundal mai deschis pentru opțiuni la hover */
-}
-
-.input option:checked {
-  background: rgba(163, 78, 110, 0.8); /* Fundal evidențiat pentru opțiunea selectată */
-}
 
 .select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 8px;
-  outline: none;
-  appearance: none; /* Ascunde săgeata nativă pentru a putea folosi un stil personalizat */
+  appearance: none;
   cursor: pointer;
+  background: rgba(40, 15, 67, 0.9); 
+  color: #f6d48b;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
-.select:focus {
-  border: 1px solid #a34e6e;
-  box-shadow: 0 0 5px rgba(163, 78, 110, 0.5);
-  background: rgba(255, 255, 255, 0.3);
+.select.input {
+  appearance: none;
+  cursor: pointer;
+  background: rgba(40, 15, 67, 0.9);
+  color: #f6d48b;
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
 }
 
 .select option {
-  background: rgba(40, 15, 67, 0.9); /* Fundal întunecat pentru opțiuni */
-  color: white; /* Text alb pentru vizibilitate */
-  padding: 10px;
+  background: rgba(40, 15, 67, 0.9);
+  color: #f6d48b; 
+  padding: 12px 16px;
+  border-radius: 8px;
 }
 
+
 .select option:hover {
-  background: rgba(100, 50, 100, 0.8); /* Fundal mai deschis pentru opțiuni la hover */
+  background: rgba(60, 25, 87, 0.9);
+  color: #fff; 
 }
 
 .select option:checked {
-  background: rgba(163, 78, 110, 0.8); /* Fundal evidențiat pentru opțiunea selectată */
+  background: rgba(70, 30, 100, 0.9); 
+  color: #f6d48b; 
 }
 
-.mainContainer {
-  padding: 20px;
+
+.input,
+.textarea,
+.select,
+button {
+  width: 100%; 
+  max-width: 100%; 
+  box-sizing: border-box; 
 }
 
-.container {
-  display: flex;
-  gap: 20px;
+.textarea {
+  min-height: 300px; 
 }
 
-.noteForm, .noteList {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
-  border-radius: 15px;
-  padding: 20px;
+.inputContainer > * {
+  margin-bottom: 15px;
 }
 
-.notesList {
-  list-style-type: none;
-  padding: 0;
-}
-
-.noteItem {
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.editButton, .deleteButton {
-  margin: 5px;
+.addButton {
+  width: 100%; 
+  margin-top: 10px;
 }
